@@ -3,7 +3,7 @@
  * Plugin Name:       FlyingPress Preload Booster
  * Plugin URI:        https://linkedin.com/in/rajinsharwar
  * Description:       Boosts the preload speed of the URLs.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Rajin Sharwar
@@ -37,28 +37,29 @@ function flyingpress_preload_booster_has_pending_preload() {
 }
 
 if ( true !== flyingpress_preload_booster_has_pending_preload() ) {
-	
 	add_action(
 		'admin_bar_menu',
 		function( $wp_admin_bar ) {
 			if ( ! is_admin() ) {
-				return;
+					return;
 			}
 
-			$id   = 'preload_booster_indicator';
-			$title = '<span class="fp-preload-booster-indicator">Preload Booster OFF</span>';
+			$id    = 'preload_booster_indicator';
+			$label = 'Preload Booster OFF — Click to Refresh';
+			$title  = '<span class="fp-preload-booster-indicator">' . esc_html( $label ) . '</span>';
+
+			// Simple page refresh by linking to the current URL.
 			$href = esc_url( add_query_arg( array() ) );
-			
 
 			$wp_admin_bar->add_node(
-				array(
-					'id'    => $id,
-					'title' => $title,
-					'href'  => $href,
-					'meta'  => array(
-						'title' => 'Preload Booster not Active',
-					),
-				)
+					array(
+							'id'    => $id,
+							'title' => $title,
+							'href'  => $href,
+							'meta'  => array(
+									'title' => esc_attr__( 'Preload Booster is currently inactive. Click to refresh.', 'flyingpress-preload-booster' ),
+							),
+					)
 			);
 		},
 		999
@@ -67,21 +68,21 @@ if ( true !== flyingpress_preload_booster_has_pending_preload() ) {
 	add_action(
 		'admin_head',
 		function() {
-			?>
-			<style>
-				.fp-preload-booster-indicator {
-					background: blue;
-					color: #fff;
-					padding: 0 8px 0 7px !important;
-					border: 1px solid #ffffff;
-					border-radius: 3px;
-					font-size: 12px;
-					font-weight: 600;
-					line-height: 1.4;
-					display: inline-block;
-				}
-			</style>
-			<?php
+				?>
+				<style>
+					.fp-preload-booster-indicator {
+							background: blue;
+							color: #ffffff;
+							padding: 0 8px 0 7px !important;
+							border: 1px solid #ffffff;
+							border-radius: 3px;
+							font-size: 12px;
+							font-weight: 600;
+							line-height: 1.4;
+							display: inline-block;
+					}
+				</style>
+				<?php
 		}
 	);
 	

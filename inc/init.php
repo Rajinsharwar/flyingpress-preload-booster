@@ -23,22 +23,25 @@ add_action(
     'admin_bar_menu',
     function( $wp_admin_bar ) {
         if ( ! is_admin() ) {
-            return;
+                return;
         }
 
-        $id   = 'preload_booster_indicator';
-        $title = '<span class="fp-preload-booster-indicator">Preload Booster ON</span>';
+        $id    = 'preload_booster_indicator';
+        $label = 'Preload Booster ON — Click to Refresh';
+        $title  = '<span class="fp-preload-booster-indicator">' . esc_html( $label ) . '</span>';
+
+        // Simple page refresh by linking to the current URL.
         $href = esc_url( add_query_arg( array() ) );
 
         $wp_admin_bar->add_node(
-            array(
-                'id'    => $id,
-                'title' => $title,
-                'href'  => $href,
-                'meta'  => array(
-                    'title' => 'Preload Booster Active',
-                ),
-            )
+                array(
+                        'id'    => $id,
+                        'title' => $title,
+                        'href'  => $href,
+                        'meta'  => array(
+                                'title' => esc_attr__( 'Preload Booster is currently active. Click to refresh.', 'flyingpress-preload-booster' ),
+                        ),
+                )
         );
     },
     999
