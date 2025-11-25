@@ -110,3 +110,7 @@ function flyingpress_preload_booster_run_as_on_heartbeat( $response, $data ) {
 
 	return $response;
 }
+
+add_filter('action_scheduler_queue_runner_concurrent_batches', function() {
+  return 5;
+});
